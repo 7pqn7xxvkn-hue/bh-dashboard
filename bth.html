@@ -323,6 +323,7 @@ function loadRegisto(){
   fetch(CSV_REGISTO+'&nocache='+Date.now())
   .then(r=>r.text()).then(text=>{
     // Split by newline, skip header rows
+   text = text.replace(/"[^"]*"/g, m => m.replace(/\n/g, ' '));
     const lines = text.split('
 ');
     let melhorNome='—', melhorPts=0;
