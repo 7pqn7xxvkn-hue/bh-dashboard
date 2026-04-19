@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Breaking The Habit 3.0</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --orange: #E8490A;
+      --orange-dark: #B83508;
+      --orange-light: #FF6B35;
+      --cream: #F5EDD6;
+      --white: #FFFFFF;
+      --black: #0A0705;
+      --dark: #120D08;
+      --card: #1A100A;
+      --card2: #1F140D;
+      --border: #2A1A10;
+      --grey: #8A6A58;
+      --grey-light: #BFA898;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      width: 100vw; height: 100vh;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(90deg, var(--orange-dark) 0%, var(--orange) 40%, var(--orange-dark) 100%);
+      padding: 0.6vh 1.5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: -50%; right: -5%;
+      width: 40%;
+      height: 200%;
+      background: radial-gradient(ellipse, rgba(255,255,255,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+    }
+
+    .header-titles h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.4vw;
+      letter-spacing: 5px;
+      color: var(--white);
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .header-titles p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7vw;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 3px;
+      font-style: italic;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      text-align: right;
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    .header-date { font-size: 0.75vw; color: rgba(255,255,255,0.7); letter-spacing: 2px; text-transform: uppercase; }
+    .header-time { font-size: 1.6vw; color: var(--white); font-weight: 700; letter-spacing: 3px; }
+    .header-agency { font-size: 0.6vw; color: rgba(255,255,255,0.6); letter-spacing: 2px; }
+
+    /* ── MAIN GRID ── */
+    main {
+      display: grid;
+      grid-template-columns: 1.1fr 0.95fr 1.1fr 0.55fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.35vw;
+      padding: 0.35vw;
+      height: 100%;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.7vh 0.8vw;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange-dark), transparent);
+    }
+
+    .card-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6vw;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--orange-light);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.35vh;
+      margin-bottom: 0.4vh;
+    }
+
+    /* ── TOP 3 INDIVIDUAL ── */
+    .card-individual { grid-column: 1; grid-row: 1; }
+
+    .rank-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5vw;
+      padding: 0.45vh 0;
+      border-bottom: 1px solid var(--border);
+      flex: 1;
+    }
+    .rank-row:last-child { border-bottom: none; }
+
+    .rank-medal { font-size: 1.3vw; width: 1.8vw; text-align: center; }
+    .rank-info { flex: 1; }
+    .rank-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1.05vw; font-weight: 700; color: var(--white); }
+    .rank-sub { font-size: 0.5vw; color: var(--grey); letter-spacing: 1px; text-transform: uppercase; }
+    .rank-pts { font-family: 'Bebas Neue', sans-serif; font-size: 2.1vw; color: var(--orange-light); letter-spacing: 2px; }
+
+    /* ── TOP 3 DUPLAS DESTAQUE ── */
+    .card-duplas-top {
+      grid-column: 2; grid-row: 1;
+      background: linear-gradient(160deg, #2A1208 0%, #1A0D06 100%);
+      border-color: var(--orange-dark);
+    }
+
+    .card-duplas-top::before {
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--orange), transparent);
+    }
+
+    .card-duplas-top .card-title { color: var(--orange); }
+
+    .dupla-top-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6vw;
+      padding: 0.55vh 0.5vw;
+      border-radius: 4px;
+      margin-bottom: 0.35vh;
+      background: rgba(232,73,10,0.06);
+      border: 1px solid rgba(232,73,10,0.12);
+      flex: 1;
+    }
+
+    .dupla-top-row.first {
+      background: linear-gradient(90deg, rgba(232,73,10,0.2), rgba(232,73,10,0.05));
+      border-color: rgba(232,73,10,0.35);
+    }
+
+    .dupla-top-row:last-child { margin-bottom: 0; }
+
+    .dupla-medal { font-size: 1.4vw; }
+    .dupla-info { flex: 1; }
+    .dupla-name-top { font-family: 'Barlow Condensed', sans-serif; font-size: 0.95vw; font-weight: 700; color: var(--white); }
+    .dupla-pts-big { font-family: 'Bebas Neue', sans-serif; font-size: 2.3vw; color: var(--orange); letter-spacing: 2px; }
+
+    /* ── RESUMO ── */
+    .card-resumo { grid-column: 3; grid-row: 1; }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 0.35vw;
+      flex: 1;
+    }
+
+    .metric-box {
+      background: var(--dark);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4vh;
+    }
+
+    .metric-box.highlight { border-color: var(--orange-dark); background: rgba(232,73,10,0.08); }
+
+    .metric-val { font-family: 'Bebas Neue', sans-serif; font-size: 2.1vw; color: var(--orange-light); letter-spacing: 2px; line-height: 1; }
+    .metric-lbl { font-family: 'Barlow Condensed', sans-serif; font-size: 0.52vw; color: var(--grey); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.15vh; }
+
+    /* ── CLOCK COL ── */
+    .card-clock-col {
+      grid-column: 4; grid-row: 1 / 3;
+      display: flex; flex-direction: column; gap: 0.4vw;
+    }
+
+    .clock-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.6vh 0.6vw;
+      display: flex; flex-direction: column; align-items: center;
+      flex: 2;
+      position: relative;
+    }
+
+    .clock-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--orange-dark), transparent);
+    }
+
+    #clock { width: 100%; max-width: 100%; }
+
+    .digital-time { font-family: 'Bebas Neue', sans-serif; font-size: 2.5vw; color: var(--orange); letter-spacing: 4px; margin-top: 0.2vh; }
+    .digital-date { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6vw; color: var(--grey); letter-spacing: 3px; text-transform: uppercase; }
+
+    .bloco-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 0.5vh 0.7vw;
+      flex: 0 0 auto;
+    }
+
+    .bloco-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.52vw; color: var(--orange-light); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.15vh; }
+    .bloco-semana { font-size: 0.6vw; color: var(--grey); }
+    .bloco-name { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85vw; font-weight: 700; color: var(--white); margin: 0.15vh 0; }
+    .bloco-badge { display: inline-block; background: var(--orange); color: var(--white); font-size: 0.52vw; font-weight: 700; letter-spacing: 1px; padding: 1px 6px; border-radius: 3px; }
+
+    .timer-card {
+      background: var(--card);
+      border: 1px solid var(--orange-dark);
+      border-radius: 5px;
+      padding: 0.5vh 0.7vw;
+      text-align: center;
+      flex: 0 0 auto;
+    }
+
+    .timer-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.52vw; color: var(--orange-light); letter-spacing: 3px; text-transform: uppercase; }
+    #timer-display { font-family: 'Bebas Neue', sans-serif; font-size: 2.8vw; color: var(--orange); letter-spacing: 4px; line-height: 1.1; }
+    .timer-btns { display: flex; gap: 0.3vw; justify-content: center; margin-top: 0.25vh; }
+    .btn-timer { font-family: 'Barlow Condensed', sans-serif; font-size: 0.58vw; font-weight: 700; letter-spacing: 2px; border: none; border-radius: 3px; padding: 0.25vh 0.7vw; cursor: pointer; }
+    .btn-start { background: var(--orange); color: var(--white); }
+    .btn-reset { background: transparent; color: var(--grey); border: 1px solid var(--border) !important; }
+
+    /* ── DESTAQUES ── */
+    .card-destaques { grid-column: 1; grid-row: 2; }
+
+    .taxa-row { display: grid; grid-template-columns: 1fr auto auto; gap: 0.3vw; align-items: center; padding: 0.2vh 0.3vw; border-radius: 3px; }
+    .taxa-row:nth-child(odd) { background: rgba(255,255,255,0.02); }
+    .taxa-nome { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7vw; font-weight: 600; color: var(--white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .taxa-val { font-family: 'Bebas Neue', sans-serif; font-size: 0.85vw; color: var(--orange-light); text-align: center; min-width: 2vw; }
+    .taxa-val.good { color: #5CB85C; }
+    .taxa-val.bad { color: var(--orange); }
+
+    /* ── RANKING DUPLAS ── */
+    .card-ranking { grid-column: 2; grid-row: 2; }
+
+    .dupla-row { display: flex; align-items: center; gap: 0.35vw; padding: 0.22vh 0; border-bottom: 1px solid var(--border); }
+    .dupla-row:last-child { border-bottom: none; }
+    .dupla-num { font-family: 'Barlow Condensed', sans-serif; font-size: 0.58vw; color: var(--grey); width: 2.5vw; flex-shrink: 0; }
+    .dupla-names { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72vw; color: var(--white); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dupla-pts { font-family: 'Bebas Neue', sans-serif; font-size: 0.95vw; color: var(--orange); letter-spacing: 1px; }
+
+    /* ── JOKERS ── */
+    .card-jokers { grid-column: 3; grid-row: 2; }
+
+    .joker-row { display: flex; justify-content: space-between; align-items: center; padding: 0.3vh 0; border-bottom: 1px solid var(--border); }
+    .joker-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6vw; color: var(--grey-light); letter-spacing: 1px; text-transform: uppercase; }
+    .joker-val { font-family: 'Bebas Neue', sans-serif; font-size: 1.2vw; color: var(--orange-light); }
+
+    .vencedor-section { margin-top: 0.4vh; padding-top: 0.4vh; border-top: 1px solid var(--orange-dark); flex: 1; display: flex; flex-direction: column; justify-content: center; }
+    .vencedor-title { font-family: 'Barlow Condensed', sans-serif; font-size: 0.58vw; color: var(--orange); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.3vh; }
+    .vencedor-content { display: flex; align-items: center; gap: 0.5vw; }
+    .vencedor-desafio { font-size: 0.58vw; color: var(--grey); width: 4vw; }
+    .vencedor-nome { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1vw; font-weight: 700; color: var(--white); flex: 1; }
+    .vencedor-pts { font-family: 'Bebas Neue', sans-serif; font-size: 1.6vw; color: var(--orange-light); }
+
+    .status { font-size: 0.48vw; color: var(--grey); text-align: right; margin-top: auto; padding-top: 0.2vh; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+
+    <div class="header-titles">
+      <h1>Breaking The Habit 3.0</h1>
+      <p>Century 21 Colombo &nbsp;·&nbsp; O impossível cede à persistência</p>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-date" id="header-date"></div>
+    <div class="header-time" id="header-time"></div>
+  </div>
+</header>
+
+<main>
+
+  <!-- TOP 3 INDIVIDUAL -->
+  <div class="card card-individual">
+    <div class="card-title">🏅 Top 3 Individual</div>
+    <div class="rank-row">
+      <span class="rank-medal">🥇</span>
+      <div class="rank-info">
+        <div class="rank-name" id="ind1-nome">—</div>
+        <div class="rank-sub">Total acumulado</div>
+      </div>
+      <div class="rank-pts" id="ind1-pts">—</div>
+    </div>
+    <div class="rank-row">
+      <span class="rank-medal">🥈</span>
+      <div class="rank-info">
+        <div class="rank-name" id="ind2-nome">—</div>
+        <div class="rank-sub">Total acumulado</div>
+      </div>
+      <div class="rank-pts" id="ind2-pts">—</div>
+    </div>
+    <div class="rank-row">
+      <span class="rank-medal">🥉</span>
+      <div class="rank-info">
+        <div class="rank-name" id="ind3-nome">—</div>
+        <div class="rank-sub">Total acumulado</div>
+      </div>
+      <div class="rank-pts" id="ind3-pts">—</div>
+    </div>
+  </div>
+
+  <!-- TOP 3 DUPLAS DESTAQUE -->
+  <div class="card card-duplas-top">
+    <div class="card-title">🏆 Top 3 Duplas — Semana Atual</div>
+    <div class="dupla-top-row first">
+      <span class="dupla-medal">🥇</span>
+      <div class="dupla-info">
+        <div class="dupla-name-top" id="dup1-nome">—</div>
+      </div>
+      <div class="dupla-pts-big" id="dup1-pts">—</div>
+    </div>
+    <div class="dupla-top-row">
+      <span class="dupla-medal">🥈</span>
+      <div class="dupla-info">
+        <div class="dupla-name-top" id="dup2-nome">—</div>
+      </div>
+      <div class="dupla-pts-big" id="dup2-pts">—</div>
+    </div>
+    <div class="dupla-top-row">
+      <span class="dupla-medal">🥉</span>
+      <div class="dupla-info">
+        <div class="dupla-name-top" id="dup3-nome">—</div>
+      </div>
+      <div class="dupla-pts-big" id="dup3-pts">—</div>
+    </div>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="card card-resumo">
+    <div class="card-title">📊 Resumo do Programa</div>
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <div class="metric-val" id="m-contactos">—</div>
+        <div class="metric-lbl">Contactos</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="m-qualificacoes">—</div>
+        <div class="metric-lbl">Qualificações</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="m-agendamentos">—</div>
+        <div class="metric-lbl">Agendamentos</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="m-reunioes">—</div>
+        <div class="metric-lbl">Reuniões</div>
+      </div>
+      <div class="metric-box">
+        <div class="metric-val" id="m-propostas">—</div>
+        <div class="metric-lbl">Propostas</div>
+      </div>
+      <div class="metric-box highlight">
+        <div class="metric-val" id="m-pontos">—</div>
+        <div class="metric-lbl">Total Pontos</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOCK COL -->
+  <div class="card-clock-col">
+    <div class="clock-card">
+      <canvas id="clock"></canvas>
+      <div class="digital-time" id="digital-time">00:00:00</div>
+      <div class="digital-date" id="digital-date"></div>
+    </div>
+    <div class="bloco-card">
+      <div class="bloco-label">Bloco Atual</div>
+      <div class="bloco-semana" id="bloco-semana">—</div>
+      <div class="bloco-name" id="bloco-name">—</div>
+      <div class="bloco-badge" id="bloco-badge">—</div>
+    </div>
+    <div class="timer-card">
+      <div class="timer-label">Timer Desafio</div>
+      <div id="timer-display">120:00</div>
+      <div class="timer-btns">
+        <button id="timer-btn" class="btn-timer btn-start" onclick="toggleTimer()">INICIAR</button>
+        <button class="btn-timer btn-reset" onclick="resetTimer()">RESET</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAXAS DE CONVERSÃO -->
+  <div class="card card-destaques">
+    <div class="card-title">📈 Taxas de Conversão — Acumulado</div>
+    <div style="display:grid; grid-template-columns:1fr auto auto; gap:0.2vw; align-items:center; font-family:'Barlow Condensed',sans-serif; font-size:0.58vw; color:var(--grey-light); border-bottom:1px solid var(--border); padding-bottom:0.2vh; margin-bottom:0.2vh;">
+      <span>Consultor</span><span style="text-align:center;">C→Q</span><span style="text-align:center;">Q→A</span>
+    </div>
+    <div id="taxas-container" style="flex:1; overflow:hidden; display:flex; flex-direction:column; gap:0.15vh;"></div>
+    <div style="display:grid; grid-template-columns:1fr auto auto; gap:0.2vw; align-items:center; font-family:'Barlow Condensed',sans-serif; font-size:0.52vw; color:var(--grey); border-top:1px solid var(--border); padding-top:0.2vh; margin-top:0.2vh;">
+      <span>C=Contactos Q=Qualificações A=Agendamentos</span>
+    </div>
+  </div>
+
+  <!-- RANKING DUPLAS -->
+  <div class="card card-ranking">
+    <div class="card-title">🔢 Ranking Duplas Completo</div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 1</span><span class="dupla-names" id="rd1-nomes">—</span><span class="dupla-pts" id="rd1-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 2</span><span class="dupla-names" id="rd2-nomes">—</span><span class="dupla-pts" id="rd2-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 3</span><span class="dupla-names" id="rd3-nomes">—</span><span class="dupla-pts" id="rd3-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 4</span><span class="dupla-names" id="rd4-nomes">—</span><span class="dupla-pts" id="rd4-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 5</span><span class="dupla-names" id="rd5-nomes">—</span><span class="dupla-pts" id="rd5-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 6</span><span class="dupla-names" id="rd6-nomes">—</span><span class="dupla-pts" id="rd6-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 7</span><span class="dupla-names" id="rd7-nomes">—</span><span class="dupla-pts" id="rd7-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 8</span><span class="dupla-names" id="rd8-nomes">—</span><span class="dupla-pts" id="rd8-pts">—</span></div>
+    <div class="dupla-row"><span class="dupla-num">Dupla 9</span><span class="dupla-names" id="rd9-nomes">—</span><span class="dupla-pts" id="rd9-pts">—</span></div>
+  </div>
+
+  <!-- JOKERS & VENCEDOR -->
+  <div class="card card-jokers">
+    <div class="card-title">🃏 Jokers &amp; Penalizações</div>
+    <div class="joker-row">
+      <span class="joker-label">Jokers Usados</span>
+      <span class="joker-val" id="m-jokers">—</span>
+    </div>
+    <div class="joker-row">
+      <span class="joker-label">Penalizações</span>
+      <span class="joker-val" id="m-penal">—</span>
+    </div>
+    <div class="vencedor-section">
+      <div class="vencedor-title">🏆 Vencedor de Ontem</div>
+      <div class="vencedor-content">
+        <span class="vencedor-desafio" id="vencedor-desafio">—</span>
+        <span class="vencedor-nome" id="vencedor-nome">—</span>
+        <span class="vencedor-pts" id="vencedor-pts">—</span>
+      </div>
+    </div>
+    <div class="status" id="last-update"></div>
+  </div>
+
+</main>
+
+<script>
+
+
+const CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSfS5EocfXuPZZAHF1MD_hcnp1DhAx1zt5Z0f-tmxOJ6DV6SRXFUlwkdEmEksK1Cw/pub?gid=260864561&single=true&output=csv';
+const CSV_DUPLAS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSfS5EocfXuPZZAHF1MD_hcnp1DhAx1zt5Z0f-tmxOJ6DV6SRXFUlwkdEmEksK1Cw/pub?gid=1635834814&single=true&output=csv';
+const CSV_TAXAS = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSfS5EocfXuPZZAHF1MD_hcnp1DhAx1zt5Z0f-tmxOJ6DV6SRXFUlwkdEmEksK1Cw/pub?gid=287417330&single=true&output=csv';
+const CSV_REGISTO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSfS5EocfXuPZZAHF1MD_hcnp1DhAx1zt5Z0f-tmxOJ6DV6SRXFUlwkdEmEksK1Cw/pub?gid=1553899010&single=true&output=csv';
+const BLOCOS = {
+  1:{b:1,n:'Criar Base de Dados',d:'Semanas 1 — 3'},2:{b:1,n:'Criar Base de Dados',d:'Semanas 1 — 3'},3:{b:1,n:'Criar Base de Dados',d:'Semanas 1 — 3'},
+  4:{b:2,n:'Fazer Seguir',d:'Semanas 4 — 6'},5:{b:2,n:'Fazer Seguir',d:'Semanas 4 — 6'},6:{b:2,n:'Fazer Seguir',d:'Semanas 4 — 6'},
+  7:{b:3,n:'Fechar',d:'Semanas 7 — 8'},8:{b:3,n:'Fechar',d:'Semanas 7 — 8'}
+};
+function parseCSV(t) {
+  return t.split('\n').map(line => {
+    const r=[]; let c='', q=false;
+    for(const ch of line){if(ch==='"'){q=!q;}else if(ch===','&&!q){r.push(c.trim());c='';}else c+=ch;}
+    r.push(c.trim()); return r;
+  });
+}
+function set(id,v){const e=document.getElementById(id);if(e)e.textContent=(!v||!String(v).trim())?'—':String(v).trim();}
+function loadData(){
+  fetch(CSV+'&nocache='+Date.now())
+  .then(r=>r.text()).then(text=>{
+    const rows=parseCSV(text);
+
+    // TOP 3 INDIVIDUAL — rows 5,6,7 | col2=nome, col5=total
+    const ind = [
+      {nome: rows[5]?.[2], pts: rows[5]?.[5]},
+      {nome: rows[6]?.[2], pts: rows[6]?.[5]},
+      {nome: rows[7]?.[2], pts: rows[7]?.[5]},
+    ];
+    ['ind1','ind2','ind3'].forEach((id,i) => {
+      const pts = parseFloat(ind[i].pts) || 0;
+      set(id+'-nome', pts > 0 ? ind[i].nome : '—');
+      set(id+'-pts',  pts > 0 ? String(Math.round(pts)) : '—');
+    });
+
+    // TOP 3 DUPLAS — rows 5,6,7 | col8=participantes, col9=pontos
+    const dup = [
+      {nome: rows[5]?.[8], pts: rows[5]?.[9]},
+      {nome: rows[6]?.[8], pts: rows[6]?.[9]},
+      {nome: rows[7]?.[8], pts: rows[7]?.[9]},
+    ];
+    ['dup1','dup2','dup3'].forEach((id,i) => {
+      const pts = parseFloat(dup[i].pts) || 0;
+      set(id+'-nome', pts > 0 ? dup[i].nome : '—');
+      set(id+'-pts',  pts > 0 ? String(Math.round(pts)) : '—');
+    });
+
+    // RESUMO — rows 10-17 | col4=valor
+    set('m-contactos',    rows[10]?.[4]);
+    set('m-qualificacoes',rows[11]?.[4]);
+    set('m-agendamentos', rows[12]?.[4]);
+    set('m-reunioes',     rows[13]?.[4]);
+    set('m-propostas',    rows[14]?.[4]);
+    set('m-jokers',       rows[15]?.[4]);
+    set('m-penal',        rows[16]?.[4]);
+    set('m-pontos',       rows[17]?.[4]);
+
+    // Destaques removidos - substituídos por Taxas de Conversão
+
+    // BLOCO ATUAL
+    const semana = rows[6]?.[5] ? Math.ceil(parseInt(rows[6]?.[5])/4)||1 : 1;
+    const BLOCOS = {
+      1:{b:1,n:'Criar Base de Dados',r:'Semanas 1 — 3'},
+      2:{b:1,n:'Criar Base de Dados',r:'Semanas 1 — 3'},
+      3:{b:1,n:'Criar Base de Dados',r:'Semanas 1 — 3'},
+      4:{b:2,n:'Angariação / Formalização',r:'Semanas 4 — 6'},
+      5:{b:2,n:'Angariação / Formalização',r:'Semanas 4 — 6'},
+      6:{b:2,n:'Angariação / Formalização',r:'Semanas 4 — 6'},
+      7:{b:3,n:'Fecho',r:'Semanas 7 — 8'},
+      8:{b:3,n:'Fecho',r:'Semanas 7 — 8'},
+    };
+    // Use current week from date
+    const weekNum = Math.ceil((new Date() - new Date('2026-04-14')) / (7*24*60*60*1000)) + 1;
+    const bloco = BLOCOS[Math.min(weekNum,8)] || BLOCOS[1];
+    set('bloco-semana', 'Semana '+Math.min(weekNum,8)+' · Bloco '+bloco.b);
+    set('bloco-name', bloco.n);
+    set('bloco-badge', bloco.r);
+
+    // Timestamp
+    const now = new Date();
+    const el = document.getElementById('last-update');
+    if(el) el.textContent = 'Atualizado: '+now.toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }).catch(e=>console.log('loadData err:',e));
+}
+
+function loadDuplas(){
+  fetch(CSV_DUPLAS+'&nocache='+Date.now())
+  .then(r=>r.text()).then(text=>{
+    const rows=parseCSV(text);
+    // Ranking Duplas CSV:
+    // Row 0: vazio, Row 1: título, Row 2: vazio
+    // Row 3: aviso, Row 4: ver semana
+    // Row 5: headers (Pos, Dupla, P1, P2, Pts P1, Pts P2, TOTAL)
+    // Row 6+: dados das duplas — col1=pos, col2=dupla, col3=P1, col4=P2, col5=PtsP1, col6=PtsP2, col7=TOTAL
+    let duplaIdx = 0;
+    for(let i=6; i<rows.length && duplaIdx<9; i++){
+      const r = rows[i];
+      if(!r || !r[3]) continue;
+      const p1 = (r[3]||'').trim(); const p2 = (r[4]||'').trim();
+      if(!p1 || p1==='-') continue;
+      const total = parseFloat(r[7])||0;
+      const nomes = p2&&p2!=='-' ? p1+' / '+p2 : p1;
+      duplaIdx++;
+      set('rd'+duplaIdx+'-nomes', total>0 ? nomes : '—');
+      set('rd'+duplaIdx+'-pts',   total>0 ? String(Math.round(total)) : '—');
+    }
+  }).catch(e=>console.log('Duplas error:',e));
+}
+loadData(); loadDuplas();
+
+// ── RELÓGIO ──
+function drawClock(){
+  const canvas = document.getElementById('clock');
+  if(!canvas) return;
+  const size = canvas.parentElement.clientWidth * 0.92;
+  canvas.width = size; canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  const cx = size/2, cy = size/2, r = size/2 - 4;
+  const now = new Date();
+  const h = now.getHours()%12 + now.getMinutes()/60;
+  const m = now.getMinutes() + now.getSeconds()/60;
+  const s = now.getSeconds();
+
+  // Face
+  ctx.clearRect(0,0,size,size);
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,2*Math.PI);
+  ctx.fillStyle='#0A0705'; ctx.fill();
+  ctx.strokeStyle='#2A1A10'; ctx.lineWidth=2; ctx.stroke();
+
+  // Hour marks
+  for(let i=0;i<12;i++){
+    const a = i*Math.PI/6;
+    const x1=cx+Math.sin(a)*(r-8), y1=cy-Math.cos(a)*(r-8);
+    const x2=cx+Math.sin(a)*(r-16), y2=cy-Math.cos(a)*(r-16);
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+    ctx.strokeStyle='#E8490A'; ctx.lineWidth=2; ctx.stroke();
+  }
+
+  // Hour hand
+  const ha = h*Math.PI/6;
+  ctx.beginPath(); ctx.moveTo(cx,cy);
+  ctx.lineTo(cx+Math.sin(ha)*(r*0.5), cy-Math.cos(ha)*(r*0.5));
+  ctx.strokeStyle='#F5EDD6'; ctx.lineWidth=Math.max(3,size/50); ctx.lineCap='round'; ctx.stroke();
+
+  // Minute hand
+  const ma = m*Math.PI/30;
+  ctx.beginPath(); ctx.moveTo(cx,cy);
+  ctx.lineTo(cx+Math.sin(ma)*(r*0.72), cy-Math.cos(ma)*(r*0.72));
+  ctx.strokeStyle='#F5EDD6'; ctx.lineWidth=Math.max(2,size/70); ctx.lineCap='round'; ctx.stroke();
+
+  // Second hand
+  const sa = s*Math.PI/30;
+  ctx.beginPath(); ctx.moveTo(cx,cy);
+  ctx.lineTo(cx+Math.sin(sa)*(r*0.82), cy-Math.cos(sa)*(r*0.82));
+  ctx.strokeStyle='#E8490A'; ctx.lineWidth=Math.max(1,size/100); ctx.lineCap='round'; ctx.stroke();
+
+  // Center dot
+  ctx.beginPath(); ctx.arc(cx,cy,size/25,0,2*Math.PI);
+  ctx.fillStyle='#E8490A'; ctx.fill();
+
+  // Update digital time
+  const pad=n=>String(n).padStart(2,'0');
+  const timeStr = pad(now.getHours())+':'+pad(now.getMinutes())+':'+pad(now.getSeconds());
+  const el_t = document.getElementById('digital-time');
+  if(el_t) el_t.textContent = timeStr;
+  const el_t2 = document.getElementById('header-time');
+  if(el_t2) el_t2.textContent = timeStr;
+
+  // Update date
+  const dias=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const dateStr = dias[now.getDay()]+', '+now.getDate()+' de '+meses[now.getMonth()]+' '+now.getFullYear();
+  const el_d = document.getElementById('digital-date');
+  if(el_d) el_d.textContent = dateStr;
+  const el_d2 = document.getElementById('header-date');
+  if(el_d2) el_d2.textContent = dateStr;
+}
+
+
+// ── TAXAS DE CONVERSÃO ──
+function loadTaxas(){
+  if(!window.CSV_TAXAS || CSV_TAXAS.includes('PLACEHOLDER')) return;
+  fetch(CSV_TAXAS+'&nocache='+Date.now())
+  .then(r=>r.text()).then(text=>{
+    const rows = parseCSV(text);
+    // Rows 6+: col1=nome, col2=C→Q, col3=Q→A (acumulado)
+    const container = document.getElementById('taxas-container');
+    if(!container) return;
+    container.innerHTML = '';
+    let count = 0;
+    for(let i=6; i<rows.length && count<17; i++){
+      const r = rows[i];
+      if(!r || !r[1] || r[1]==='-') continue;
+      const nome = (r[1]||'').trim();
+      if(!nome || nome.includes('MÉDIA') || nome.includes('Média')) continue;
+      const cq = r[2]||'—'; // Contactos → Qualificações
+      const qa = r[3]||'—'; // Qualificações → Agendamentos
+      const row = document.createElement('div');
+      row.className = 'taxa-row';
+      row.innerHTML = \`<span class="taxa-nome">\${nome}</span><span class="taxa-val">\${cq}</span><span class="taxa-val">\${qa}</span>\`;
+      container.appendChild(row);
+      count++;
+    }
+  }).catch(e=>console.log('Taxas err:',e));
+}
+
+setInterval(drawClock,1000);
+setInterval(loadData,60000);
+setInterval(loadDuplas,60000);
+drawClock();
+
+// VENCEDOR DE ONTEM
+function loadRegisto(){
+  const hoje=new Date().getDay();
+  // JS: 0=Dom,1=Seg,2=Ter,3=Qua,4=Qui,5=Sex,6=Sab
+  // Seg=sem anterior, Ter=Desafio 1, Qua=Desafio 2, Qui=Desafio 3, Sex=Desafio 4
+  const mapaDesafio={1:null,2:'Desafio 1',3:'Desafio 2',4:'Desafio 3',5:'Desafio 4'};
+  const desafio=mapaDesafio[hoje];
+  const el_d=document.getElementById('vencedor-desafio');
+  const el_n=document.getElementById('vencedor-nome');
+  const el_p=document.getElementById('vencedor-pts');
+  if(!el_d||!desafio){
+    if(el_d)el_d.textContent='—';
+    if(el_n)el_n.textContent='—';
+    if(el_p)el_p.textContent='—';
+    return;
+  }
+  fetch(CSV_REGISTO+'&nocache='+Date.now()).then(r=>r.text()).then(text=>{
+    // Limpar quebras de linha dentro de campos entre aspas
+    text=text.replace(/"[^"]*"/g,function(m){return m.replace(/\n/g,' ');});
+    const lines=text.split('\n');
+    let melhorPts=0;
+    const vencedores=[];
+    // Descobrir semana atual a partir dos dados
+    let semanaAtual='';
+    for(let i=0;i<lines.length;i++){
+      const p=lines[i].split(',');
+      if(p.length<4) continue;
+      const s=(p[1]||'').trim();
+      if(s.startsWith('Semana ')){semanaAtual=s;break;}
+    }
+    // Procurar vencedor(es) do desafio anterior
+    for(let i=0;i<lines.length;i++){
+      const l=lines[i];
+      if(l.indexOf(desafio)===-1) continue;
+      const p=l.split(',');
+      if(p.length<17) continue;
+      const semana=(p[1]||'').trim();
+      const des=(p[2]||'').trim();
+      const nome=(p[3]||'').trim();
+      const pts=parseFloat(p[16])||0;
+      if(des!==desafio) continue;
+      if(!nome||nome==='-') continue;
+      if(pts>melhorPts){melhorPts=pts;vencedores.length=0;vencedores.push(nome);}
+      else if(pts===melhorPts&&pts>0&&!vencedores.includes(nome)){vencedores.push(nome);}
+    }
+    el_d.textContent=desafio;
+    if(melhorPts>0){
+      el_n.textContent=vencedores.join(' / ');
+      el_p.textContent=String(melhorPts);
+    } else {
+      el_n.textContent='—';
+      el_p.textContent='—';
+    }
+  }).catch(e=>console.log(e));
+}
+// TIMER
+let tS=7200,tR=false,tI=null;
+function toggleTimer(){tR=!tR;document.getElementById('timer-btn').textContent=tR?'PARAR':'INICIAR';document.getElementById('timer-btn').style.background=tR?'#8B2020':'#C9A84C';document.getElementById('timer-btn').style.color=tR?'#fff':'#0D0D0D';if(tR)tI=setInterval(tickTimer,1000);else clearInterval(tI);}
+function tickTimer(){if(tS<=0){clearInterval(tI);tR=false;document.getElementById('timer-btn').textContent='INICIAR';document.getElementById('timer-btn').style.background='#C9A84C';document.getElementById('timer-btn').style.color='#0D0D0D';document.getElementById('timer-display').textContent='00:00';document.getElementById('timer-display').style.color='#FF4444';return;}tS--;const m=Math.floor(tS/60),s=tS%60;document.getElementById('timer-display').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');if(tS<=300)document.getElementById('timer-display').style.color='#FF4444';else document.getElementById('timer-display').style.color='#C9A84C';}
+function resetTimer(){clearInterval(tI);tR=false;tS=7200;document.getElementById('timer-display').textContent='120:00';document.getElementById('timer-display').style.color='#C9A84C';document.getElementById('timer-btn').textContent='INICIAR';document.getElementById('timer-btn').style.background='#C9A84C';document.getElementById('timer-btn').style.color='#0D0D0D';}
+loadRegisto();setInterval(loadRegisto,60000);
+setInterval(loadTaxas,60000);
+
+
+</script>
+</body>
+</html>
